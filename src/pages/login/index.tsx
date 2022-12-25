@@ -6,48 +6,55 @@ import * as yup from "yup";
 
 import { Container, LoginContainer, Column, Spacing, Title } from "./styles";
 import { defaultValues, IFormLogin } from "./types";
-import React from "react";
 
-const schema = yup.object({
-  email: yup.string().email('E-mail inválido').required('Campo obrigatório'),
-  password: yup.string().min(6,'Mínimo 6').required('Campo obrigatório'),
-}).required();
+const schema = yup
+  .object({
+    email: yup.string().email("E-mail inválido").required("Campo obrigatório"),
+    password: yup
+      .string()
+      .min(6, "No minimo 6 caracteres")
+      .required("Campo obrigatório"),
+  })
+  .required();
 
 const Login = () => {
-
-  const {control, formState: { errors, isValid}} = useForm<IFormLogin>({
+  const {
+    control,
+    formState: { errors, isValid },
+  } = useForm<IFormLogin>({
     resolver: yupResolver(schema),
-    mode: 'onBlur', 
+    mode: "onBlur",
     defaultValues,
-    reValidateMode: 'onChange'
-  })
+    reValidateMode: "onChange",
+  });
 
-    return (
-        <Container>
-          <LoginContainer>
-            <Column>
-              <Title>Login</Title>
-              <Spacing />
-              <Input
-                name="email"
-                placeholder="Email"
-                control={control}
-                errorMessage={errors?.email?.message}
-              />
-              <Spacing />
-              <Input
-                name="password"
-                type="password"
-                placeholder="Senha"
-                control={control}
-                errorMessage={errors?.password?.message}
-              />
-              <Spacing />
-              {isValid === true ? <Button title="Entrar" /> : <Button title="Entrar" estado="disable"/>}
-            </Column>
-          </LoginContainer>
-        </Container>
-    );
+  return (
+    <Container>
+      <LoginContainer>
+        <Column>
+          <Title>Login</Title>
+          <Spacing />
+          <Input
+            name="email"
+            placeholder="Email"
+            control={control}
+            errorMessage={errors?.email?.message}
+          />
+          <Spacing />
+          <Input
+            name="password"
+            type="password"
+            placeholder="Senha"
+            control={control}
+            errorMessage={errors?.password?.message}
+          />
+          <Spacing />
+          {isValid === true ? <Button title="Entrar" estado='true' /> : <Button title="Entrar" estado='f' />}
+        </Column>
+      </LoginContainer>
+    </Container>
+  );
 };
 
-export default Login
+export default Login;
+
